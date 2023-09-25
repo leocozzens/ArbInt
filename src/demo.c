@@ -5,9 +5,11 @@
 #include <arbint.h>
 
 int main(void) {
-	ArbInt *myInt = arb_create(false, 3, 0x000000000F0F00C, 123, 0x000000000F0F00F);
+	ArbInt *myInt = arb_create(false, 2, 0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFF0);
 	char *myHex = arb_print_hex(myInt);
-	printf("The num in hex is: %s\nIn base 10 is _\n", myHex);
+	char *myDigi = arb_print_base10(myInt);
+	printf("The num in hex is: %s\nIn base 10 is %s\n", myHex, myDigi);
 	free(myHex);
+	free(myDigi);
 	return 0;
 }

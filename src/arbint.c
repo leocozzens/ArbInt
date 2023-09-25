@@ -3,6 +3,7 @@
 #include <stdarg.h> 
 #include <stdint.h>
 #include <stdlib.h>
+#include <limits.h>
 // Local headers
 #include <arbint.h>
 #include <string.h>
@@ -36,21 +37,33 @@ ArbInt *arb_div(ArbInt *x, ArbInt *y);
 ArbInt *arb_mult(ArbInt *x, ArbInt *y);
 
 char *arb_print_hex(ArbInt *target) {
-	char *hexVal;
-	{
-		char tmp[UINT64_HEX_SIZE + 1];
-		sprintf(tmp, "%lX", target->set[0]);
-		hexVal = malloc(target->size * UINT64_HEX_SIZE + 1 - (UINT64_HEX_SIZE - strlen(tmp)));
-		strcpy(hexVal, tmp);
-	}
-	for(size_t i = 1; i < target->size; i++) {
-		char tmp[UINT64_HEX_SIZE + 1];
+	char tmp[UINT64_HEX_SIZE + 1];
+	sprintf(tmp, "%lX", target->set[0]);
+
+	char *hexVal = malloc(target->size * UINT64_HEX_SIZE + 1 - (UINT64_HEX_SIZE - strlen(tmp)));
+	char *nextVal = stpcpy(hexVal, tmp);
+
+	for(uint64_t i = 1; i < target->size; i++) {
 		sprintf(tmp, "%016lX", target->set[i]);
-		strcat(hexVal, tmp);
+		nextVal = stpcpy(nextVal, tmp);
 	}
 
 	return hexVal;
 }
 char *arb_print_base10(ArbInt *target) {
-	return NULL;
+	char buffer[(target->size * 64) / 3 + 2];
+	char *result = buffer + sizeof(buffer) - 1;
+
+	*result = '\0';
+	uint64_t num;
+	for(int i = 0; i < target->size; i++) {
+		num = target->set[i];
+		do {
+			*--result = '0' + (num % 10);
+			num /= 10;
+		} while(num != 0);
+	}
+	char *digiVal = malloc(strlen(result));
+	strcpy(digiVal, result);
+	return digiVal;
 }

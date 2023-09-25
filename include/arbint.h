@@ -2,12 +2,11 @@
 #define ARBINT_H
 
 #include <stdint.h>
-#include <stddef.h>
 #include <stdbool.h>
 
 typedef struct {
     uint64_t *set;
-    size_t size;
+    uint64_t size;
     bool sign;
 } ArbInt;
 

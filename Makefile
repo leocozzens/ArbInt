@@ -1,6 +1,6 @@
 CC = gcc
 EXT = c
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall -Wno-incompatible-pointer-types
 IFLAGS = -Iinclude
 LFLAGS =
 SRC = src
