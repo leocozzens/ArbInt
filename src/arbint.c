@@ -36,9 +36,14 @@ ArbInt *arb_div(ArbInt *x, ArbInt *y);
 ArbInt *arb_mult(ArbInt *x, ArbInt *y);
 
 char *arb_print_hex(ArbInt *target) {
-	char *hexVal = malloc(target->size * UINT64_HEX_SIZE + 1);
-	hexVal[0] = 0x0;
-	for(size_t i = 0; i < target->size; i++) {
+	char *hexVal;
+	{
+		char tmp[UINT64_HEX_SIZE + 1];
+		sprintf(tmp, "%lX", target->set[0]);
+		hexVal = malloc(target->size * UINT64_HEX_SIZE + 1 - (UINT64_HEX_SIZE - strlen(tmp)));
+		strcpy(hexVal, tmp);
+	}
+	for(size_t i = 1; i < target->size; i++) {
 		char tmp[UINT64_HEX_SIZE + 1];
 		sprintf(tmp, "%016lX", target->set[i]);
 		strcat(hexVal, tmp);
