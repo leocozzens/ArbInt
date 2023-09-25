@@ -37,12 +37,15 @@ ArbInt *arb_mult(ArbInt *x, ArbInt *y);
 
 char *arb_print_hex(ArbInt *target) {
 	char *hexVal = malloc(target->size * UINT64_HEX_SIZE + 1);
-	for(int i = 0; i < target->size; i++) {
+	hexVal[0] = 0x0;
+	for(size_t i = 0; i < target->size; i++) {
 		char tmp[UINT64_HEX_SIZE + 1];
-		sprintf(tmp, "%lX", target->set[i]);
+		sprintf(tmp, "%016lX", target->set[i]);
 		strcat(hexVal, tmp);
 	}
 
 	return hexVal;
 }
-char *arb_print_base10(ArbInt *target);
+char *arb_print_base10(ArbInt *target) {
+	return NULL;
+}
