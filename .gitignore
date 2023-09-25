@@ -63,3 +63,6 @@ dkms.conf
 # Binaries
 bin/
 obj/
+
+# clangd config
+compile_flags.txt
