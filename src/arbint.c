@@ -63,7 +63,7 @@ char *arb_print_base10(ArbInt *target) {
 			num /= 10;
 		} while(num != 0);
 	}
-	char *digiVal = malloc(strlen(result));
+	char *digiVal = malloc(strlen(result) + 1);
 	strcpy(digiVal, result);
 	return digiVal;
 }
